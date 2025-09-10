@@ -2,7 +2,40 @@ import mensajeria.*
 import mensajeros.*
 
 
-describe "2 " {}
+describe "estado mensajeros " {
 
+    test "contratar mensajero" {
+        mensajeria.contratar(morfeo)
+        assert.that(mensajeria.mensajeros().contains(morfeo))
+    }
+
+    test "despedir mensajero"{
+        mensajeria.contratar(morfeo)
+        mensajeria.despedir(morfeo)
+        assert.that(mensajeria.mensajeros().isEmpty())
+    }
+     test "despedir todos los mensajeros"{
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(neo)
+        mensajeria.contratar(trinity)
+        mensajeria.despedirTodos()
+        assert.that(mensajeria.mensajeros().isEmpty())
+    }
+      test "ver si es hay mas de 2 mensajeros"{
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(neo)
+        mensajeria.contratar(trinity)
+        assert.that(mensajeria.mensajeros().size() > 2)
+    }
+      test "puede ser entregado por el primer empleado"{
+        mensajeria.contratar(neo)
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(trinity)
+        assert.that(paquete.puedeSerEntregadoPor(neo))
+    }
+    
+
+}
 
 describe "3 " {}
+
