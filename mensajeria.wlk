@@ -12,4 +12,18 @@ object mensajeria {
     method despedirTodos(){
         mensajeros.clear()
     }
+    method esGrande(){
+        return self.mensajeros().size() > 2
+    }
+  
+    method entregaPrimerEmpleado(){
+        return self.mensajeros().asList().first().peso() < 1000 && paquete.estaPago()
+    }
+
 }
+object paquetito {
+    const property pago = true 
+}
+
+object paqueton {}
+
