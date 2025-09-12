@@ -25,17 +25,30 @@ describe "estado mensajeros " {
         mensajeria.contratar(morfeo)
         mensajeria.contratar(neo)
         mensajeria.contratar(trinity)
-        assert.that(mensajeria.mensajeros().size() > 2)
+        assert.that(mensajeria.esGrande())
     }
       test "puede ser entregado por el primer empleado"{
         mensajeria.contratar(neo)
         mensajeria.contratar(morfeo)
         mensajeria.contratar(trinity)
-        assert.that(paquete.puedeSerEntregadoPor(neo))
+        camion.acoplados(3)
+        paquete.pago(true)
+        assert.that(mensajeria.entregaPrimerEmpleado())
     }
-    
+       test "peso del ultimo mensajero"{
+        mensajeria.contratar(neo)
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(trinity)
+        assert.equals(900,mensajeria.mensajeros().asList().last().peso())
 
+       }
 }
 
-describe "3 " {}
+describe "Paquetes" {
 
+    test "se puede entregar el paquete" {
+
+
+    assert.that(mensajeria.)
+}
+}
