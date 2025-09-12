@@ -12,12 +12,12 @@ describe "Test de mensajeros primera parte " {
 }
 
 	test "monopatin pesa 1kg + "{
-        morfeo.transporte(monopatin)
+        morfeo.transporte()
 	    assert.equals(1, monopatin.peso())
 }
 
 	test "Morfeo en monopatin pesa 90kg + 1kg "{
-		morfeo.transporte(monopatin)
+		morfeo.transporte()
 	    assert.equals(91, morfeo.peso() )
 }
 
