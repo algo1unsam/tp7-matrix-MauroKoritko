@@ -1,9 +1,11 @@
+import mensajeria.*
+
 object morfeo {
-    var property vehiculo = camion
+    var property vehiculo = monopatin
     const property peso = 90
 
     method peso(){
-        return peso + camion.peso()
+        return peso + monopatin.peso()
     } 
     method transporte(){
         return vehiculo
@@ -32,15 +34,14 @@ object monopatin {
 }
 
 object puente {
-
     method dejarPasar(mensajero){
-      return mensajero.peso() < 1000
+        return mensajero.peso() < 1000
     }
 }
 
 object paquete {
     var property pago = null 
-
+    const property paquetes = [paquetito,paqueton] 
     method pago(pagado){
         pago = pagado
     }
@@ -54,9 +55,23 @@ object paquete {
         pago = true
         return pago
     }
-
     method puedeSerEntregadoPor(mensajero){
         return self.pagar() && puente.dejarPasar(mensajero) 
-
     }
+
+    
+}
+object trinity {
+    var property peso = 900
+
+    method peso(){
+        return peso
+    }
+}
+object neo {
+    var property peso = 0
+
+      method peso(){
+        return peso
+    } 
 }
