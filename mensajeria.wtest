@@ -1,5 +1,6 @@
 import mensajeria.*
 import mensajeros.*
+import paquetes.*
 
 
 describe "estado mensajeros " {
@@ -46,9 +47,43 @@ describe "estado mensajeros " {
 
 describe "Paquetes" {
 
-    test "se puede entregar el paquete" {
+    test "se pueden entregar los paquetes" {
+        mensajeria.contratar(neo)
+        paqueton.pagar(50)
+        assert.that(paquetito.puedeSerEntregadoPor(neo))
+        assert.that(paqueton.puedeSerEntregadoPor(neo))
+    }
 
+    test "tiene que estar pago el paqueton"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("laplata")
+        paqueton.pagar(150)
+        assert.that(paqueton.puedeSerEntregadoPor(neo))
+    }
 
-    assert.that(mensajeria.)
-}
+    test "quienes pueden entregar el paquete"{
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(trinity)
+        mensajeria.contratar(neo)
+        paqueton.pagar(150)
+        var posibles = mensajeria.mensajerosQuePueden(paqueton)
+
+        assert.that(posibles.contains(morfeo))
+        assert.that(posibles.contains(trinity))
+        assert.that(posibles.contains(neo))
+        }
+    test "saber si la mensajeria tiene sobre peso"{
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(trinity)
+        mensajeria.contratar(neo)
+        camion.acoplados(3)
+        assert.that(mensajeria.tieneSobrepeso())
+    }
+
+    test "enviar un paquete sino agregarlo a pendiente"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("laplata")
+        paqueton.pagar(150)
+        assert.that(mensajeria.enviar(paqueton , neo))
+    }
 }

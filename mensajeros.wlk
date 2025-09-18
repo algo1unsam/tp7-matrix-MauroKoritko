@@ -1,11 +1,11 @@
 import mensajeria.*
 
 object morfeo {
-    var property vehiculo = monopatin
+    var property vehiculo = camion
     const property peso = 90
 
     method peso(){
-        return peso + monopatin.peso()
+        return peso + camion.peso()
     } 
     method transporte(){
         return vehiculo
@@ -41,7 +41,7 @@ object puente {
 
 object paquete {
     var property pago = null 
-    const property paquetes = [paquetito,paqueton] 
+    
     method pago(pagado){
         pago = pagado
     }
