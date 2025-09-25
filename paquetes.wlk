@@ -1,7 +1,6 @@
 import mensajeria.*
 import mensajeros.*
 
-
 object paquetito {
    
     method precioTotal() {
