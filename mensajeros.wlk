@@ -12,7 +12,6 @@ object morfeo {
     }
 }
 
-
 object camion {
     var property peso = 500
     var property acoplado = 1
