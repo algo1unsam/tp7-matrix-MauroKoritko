@@ -1,8 +1,123 @@
 import mensajeria.*
 import mensajeros.*
+import paquetes.*
 
 
-describe "2 " {}
+describe "estado mensajeros " {
 
+    test "contratar mensajero" {
+        mensajeria.contratar(morfeo)
+        assert.that(mensajeria.mensajeros().contains(morfeo))
+    }
 
-describe "3 " {}
+    test "despedir mensajero"{
+        mensajeria.contratar(morfeo)
+        mensajeria.despedir(morfeo)
+        assert.that(mensajeria.mensajeros().isEmpty())
+    }
+     test "despedir todos los mensajeros"{
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(neo)
+        mensajeria.contratar(trinity)
+        mensajeria.despedirTodos()
+        assert.that(mensajeria.mensajeros().isEmpty())
+    }
+      test "ver si es hay mas de 2 mensajeros"{
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(neo)
+        mensajeria.contratar(trinity)
+        assert.that(mensajeria.esGrande())
+    }
+      test "puede ser entregado por el primer empleado"{
+        mensajeria.contratar(neo)
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(trinity)
+        camion.acoplados(3)
+        paquete.pago(true)
+        assert.that(mensajeria.entregaPrimerEmpleado())
+    }
+       test "peso del ultimo mensajero"{
+        mensajeria.contratar(neo)
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(trinity)
+        assert.equals(900,mensajeria.mensajeros().asList().last().peso())
+
+       }
+}
+
+describe "Paquetes" {
+
+    test "se pueden entregar los paquetes" {
+        mensajeria.contratar(neo)
+        paqueton.pagar(50)
+        assert.that(paquetito.puedeSerEntregadoPor(neo))
+        assert.that(paqueton.puedeSerEntregadoPor(neo))
+    }
+
+    test "tiene que estar pago el paqueton"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("laplata")
+        paqueton.pagar(150)
+        assert.that(paqueton.puedeSerEntregadoPor(neo))
+    }
+
+    test "quienes pueden entregar el paquete"{
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(trinity)
+        mensajeria.contratar(neo)
+        paqueton.pagar(150)
+        var posibles = mensajeria.mensajerosQuePueden(paqueton)
+
+        assert.that(posibles.contains(morfeo))
+        assert.that(posibles.contains(trinity))
+        assert.that(posibles.contains(neo))
+        }
+    test "saber si la mensajeria tiene sobre peso"{
+        mensajeria.contratar(morfeo)
+        mensajeria.contratar(trinity)
+        mensajeria.contratar(neo)
+        camion.acoplados(3)
+        assert.that(mensajeria.tieneSobrepeso())
+    }
+
+    test "enviar un paquete sino agregarlo a pendiente"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("laplata")
+        paqueton.pagar(100)
+        mensajeria.enviar(paqueton)
+        assert.that(mensajeria.pendientes().isEmpty())
+    }
+
+    test "conocer la facturacion"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("laplata")
+        paqueton.pagar(150)
+        mensajeria.enviar(paqueton)
+        assert.equals(100,mensajeria.facturacion())
+    }
+    test "enviar todos los paquetes"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("La Plata")
+        paqueton.pagar(50)
+        mensajeria.enviar(paqueton)
+        paqueton.agregarDestino("Rosario")
+        paqueton.pagar(50)
+        mensajeria.enviar(paqueton)
+        assert.that(mensajeria.pendientes().size() == 2)
+        mensajeria.enviarTodos(mensajeria.pendientes())
+        assert.that(mensajeria.pendientes().isEmpty())
+       
+    }
+    test "encontrar el paquete mas caro y enviarlo"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("La Plata")
+        paqueton.pagar(50)
+        mensajeria.enviar(paqueton)
+        paqueton.pagar(0)
+        mensajeria.enviar(paqueton)
+        paqueton.pagar(150)
+        mensajeria.enviarPendienteMasCaro()
+        assert.equals(1,mensajeria.pendientes().size())
+
+    }
+}
