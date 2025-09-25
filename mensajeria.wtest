@@ -83,7 +83,41 @@ describe "Paquetes" {
     test "enviar un paquete sino agregarlo a pendiente"{
         mensajeria.contratar(neo)
         paqueton.agregarDestino("laplata")
+        paqueton.pagar(100)
+        mensajeria.enviar(paqueton)
+        assert.that(mensajeria.pendientes().isEmpty())
+    }
+
+    test "conocer la facturacion"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("laplata")
         paqueton.pagar(150)
-        assert.that(mensajeria.enviar(paqueton , neo))
+        mensajeria.enviar(paqueton)
+        assert.equals(100,mensajeria.facturacion())
+    }
+    test "enviar todos los paquetes"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("La Plata")
+        paqueton.pagar(50)
+        mensajeria.enviar(paqueton)
+        paqueton.agregarDestino("Rosario")
+        paqueton.pagar(50)
+        mensajeria.enviar(paqueton)
+        assert.that(mensajeria.pendientes().size() == 2)
+        mensajeria.enviarTodos(mensajeria.pendientes())
+        assert.that(mensajeria.pendientes().isEmpty())
+       
+    }
+    test "encontrar el paquete mas caro y enviarlo"{
+        mensajeria.contratar(neo)
+        paqueton.agregarDestino("La Plata")
+        paqueton.pagar(50)
+        mensajeria.enviar(paqueton)
+        paqueton.pagar(0)
+        mensajeria.enviar(paqueton)
+        paqueton.pagar(150)
+        mensajeria.enviarPendienteMasCaro()
+        assert.equals(1,mensajeria.pendientes().size())
+
     }
 }
